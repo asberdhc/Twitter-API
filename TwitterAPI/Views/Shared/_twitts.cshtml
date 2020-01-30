@@ -1,4 +1,6 @@
-﻿
+﻿@using System.Collections
+@using Tweetinvi.Models
+
 
 
 
@@ -7,9 +9,11 @@
 @*iterar el listado de personas*@
 
 
-@foreach (var a in (List<TwitterAPI.Models.Hash_tagModel>)ViewBag.ListaHashs)
+@foreach (var a in (IEnumerable<ITweet>)ViewBag.listatw)
+    
+   
 {
     <div>
-        <span>@a.Usuario (@a.Hash) @a.FechaPublicacion</span>
+        <span>@a.CreatedBy (@a.FullText) @a.CreatedAt</span>
     </div>
 }

@@ -1,62 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using Tweetinvi;
 using TwitterAPI.Models;
 
 namespace TwitterAPI.Controllers
 {
     public class HomeController : Controller
     {
+
+        
+
         public ActionResult Index()
         {
             //instanciar modelo y llenarlo con informacion
             //remplazar con API de Twitter y traer hash
-            var tweets = new List<Hash_tagModel>()
-            {
-                new Hash_tagModel()
-                {
-                    Hash = "#Enero",
-                    FechaPublicacion = Convert.ToDateTime("2020/01/29"),
-                    Usuario = "fer"
-                },
-                new Hash_tagModel()
-                {
-                Hash = "#Febrero",
-                FechaPublicacion = Convert.ToDateTime("2020/01/01"),
-                Usuario = "Luisfer"
-            }
-            };
+            Auth.SetUserCredentials("OmnRr6g9E4nIdy5vW6IE9gJmD", "iY9kah88jg5Hw53qsfQ5UGzpif0V0mOK30Ar5ie2pBfVpFyHan"
+                                   , "796462679758163971-NubG7GJva0P1BttmpQoGkot71YTc6f9"
+                                   , "aODZ3wD1xD6lxifeWZPO4TzjY7ybD5gYojdMiQXDhEZjt");
+            var usertw = Tweetinvi.User.GetAuthenticatedUser();
 
-            //enviar la lista por medio de ViewBag para implementar en parcialView
+            //lista de 5 tw
+            var tw = Timeline.GetUserTimeline(usertw,5);
 
-            ViewBag.ListaHashs = tweets; //se le asigna la lista con datos
+            var followers = Timeline.GetRetweetsOfMeTimeline();
+           
 
-
+            ViewBag.listatw = tw;
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            //instanciar modelo y llenarlo con informacion
+            //remplazar con API de Twitter y traer hash
+            Auth.SetUserCredentials("OmnRr6g9E4nIdy5vW6IE9gJmD", "iY9kah88jg5Hw53qsfQ5UGzpif0V0mOK30Ar5ie2pBfVpFyHan"
+                , "796462679758163971-NubG7GJva0P1BttmpQoGkot71YTc6f9"
+                , "aODZ3wD1xD6lxifeWZPO4TzjY7ybD5gYojdMiQXDhEZjt");
+            var usertw = Tweetinvi.User.GetAuthenticatedUser();
 
-            var tweets = new List<Hash_tagModel>()
-            {
-                new Hash_tagModel()
-                {
-                    Hash = "#Mexico",
-                    FechaPublicacion = Convert.ToDateTime("2020/01/29"),
-                    Usuario = "user1"
-                },
-                new Hash_tagModel()
-                {
-                    Hash = "#USA",
-                    FechaPublicacion = Convert.ToDateTime("2020/01/01"),
-                    Usuario = "user2"
-                }
-            };
-            ViewBag.ListaHashs = tweets; //se le asigna la lista con datos
+            //lista de  Retw
+           
+
+            var retweetss = Timeline.GetRetweetsOfMeTimeline();
+
+
+            ViewBag.listatw = retweetss;
             return View();
         }
 
