@@ -1,0 +1,15 @@
+﻿
+
+
+
+
+
+@*iterar el listado de personas*@
+
+
+@foreach (var a in (List<TwitterAPI.Models.Hash_tagModel>)ViewBag.ListaHashs)
+{
+    <div>
+        <span>@a.Usuario (@a.Hash) @a.FechaPublicacion</span>
+    </div>
+}
