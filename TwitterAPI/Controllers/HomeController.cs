@@ -8,9 +8,20 @@ namespace TwitterAPI.Controllers
 {
     public class HomeController : Controller
     {
+
         public ActionResult Index()
         {
             return View();
+        }
+
+
+        //Represents a redirection to a new URL
+        [HttpGet]
+        public RedirectResult redirect()
+        {
+             var redirect = Redirect("Contact");
+            return redirect;
+             
         }
 
         public ActionResult About()
