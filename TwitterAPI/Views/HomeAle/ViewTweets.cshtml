@@ -1,0 +1,39 @@
+﻿@using Tweetinvi.Models
+@{
+    ViewBag.Title = "ViewTweets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ITweet> tweets = (List<ITweet>)ViewBag.tweets;
+}
+
+<h2>ViewTweets</h2>
+<div id="TweetsList">
+    @foreach (var tweet in tweets)
+    {
+        <div class="row bg-info">
+            <h1>@tweet.Id</h1>
+            <p class="alert">@tweet.FullText</p>
+            <button data-customer-id="@tweet.Id" class="btn btn-primary js-delete">Delete</button>
+        </div>
+        <br />
+    }
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#TweetsList .js-delete").on("click", function () {
+                var btn = $(this);
+                if (confirm("delete?")) {
+                    $.ajax({
+                        url: "api/Delete?id=" + btn.attr("data-customer-id").valueOf(),
+                        method: "DELETE",
+                        success: function () {
+
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
